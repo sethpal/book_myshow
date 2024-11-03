@@ -6,9 +6,7 @@ import com.scaler.bookmymovie.response.TicketResponse;
 import com.scaler.bookmymovie.services.TicketService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.function.EntityResponse;
 
 @RestController
@@ -22,7 +20,7 @@ public class TicketController {
     }
 
     @PostMapping("/bookTicket")
-    public  ResponseEntity<TicketResponse> bookTicket(TicketDto ticketDto){
+    public  ResponseEntity<TicketResponse> bookTicket(@RequestBody TicketDto ticketDto){
 
         TicketResponse response;
         try {
@@ -34,4 +32,29 @@ public class TicketController {
         }
     }
 
+    @GetMapping (path="/{ticketID}")
+    public  ResponseEntity<TicketResponse> getTicket(@PathVariable Long ticketID){
+
+        TicketResponse response;
+        try {
+            response = ticketService.getTicket(ticketID);
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+        }catch(Exception e)
+        {
+            return new ResponseEntity<TicketResponse>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping (path="/{ticketID}")
+    public  ResponseEntity<TicketResponse> cancelTicket(@PathVariable Long ticketID){
+
+        TicketResponse response;
+        try {
+            response = ticketService.cancelTicket(ticketID);
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+        }catch(Exception e)
+        {
+            return new ResponseEntity<TicketResponse>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }

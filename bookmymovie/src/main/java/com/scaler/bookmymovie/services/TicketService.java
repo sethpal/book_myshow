@@ -2,6 +2,7 @@ package com.scaler.bookmymovie.services;
 
 import com.scaler.bookmymovie.dtos.TicketDto;
 import com.scaler.bookmymovie.exceptions.ShowDoesNotExists;
+import com.scaler.bookmymovie.exceptions.TicketDoesNotExists;
 import com.scaler.bookmymovie.exceptions.UserDoesNotExists;
 import com.scaler.bookmymovie.models.Show;
 import com.scaler.bookmymovie.models.ShowSeat;
@@ -81,6 +82,48 @@ public class TicketService {
        return ticketResponse;
 
    }
+
+    public TicketResponse getTicket(Long ticketId){
+
+        Optional<Ticket> ticketOptional=ticketRepository.findById(ticketId);
+
+        if(ticketOptional.isEmpty())
+        {
+            throw new TicketDoesNotExists();
+        }
+
+        Ticket ticket =new Ticket();
+        ticket=ticketOptional.get();
+        TicketResponse ticketResponse=new TicketResponse();
+        ticketResponse.setBookedSeats(ticket.getBookedSeat());
+        ticketResponse.setAddress(ticket.getShow().getTheatre().getAddress());
+        ticketResponse.setTheaterName(ticket.getShow().getTheatre().getName());
+        ticketResponse.setMovieName(ticket.getShow().getMovie().getMovieName());
+        ticketResponse.setDate(ticket.getShow().getDate());
+        ticketResponse.setTime(ticket.getShow().getStartTime());
+        ticketResponse.setTotalPrice(ticket.getTotalPrice());
+        return ticketResponse;
+
+    }
+
+    public TicketResponse cancelTicket(Long ticketId){
+
+        Optional<Ticket> ticketOptional=ticketRepository.findById(ticketId);
+
+        if(ticketOptional.isEmpty())
+        {
+            throw new TicketDoesNotExists();
+        }
+
+        Ticket ticket =new Ticket();
+        ticket=ticketOptional.get();
+        TicketResponse ticketResponse=new TicketResponse();
+        //Set each seat to be Available
+        //Set the tid to CANCELLED
+        //Initiate the refund
+        return ticketResponse;
+
+    }
 
 
 
