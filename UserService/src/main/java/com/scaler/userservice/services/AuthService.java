@@ -9,6 +9,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Service
 public class AuthService {
     private final UserRepository userRepository;
@@ -34,8 +37,13 @@ public class AuthService {
         }
         User user = new User();
         user.setEmail(input.getEmail());
+        user.setName(input.getName());
+        user.setPhoneNumber(input.getPhoneNumber());
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        user.setCreatedAt(formatter.format(date));
+        user.setUpdatedAt(formatter.format(date));
         user.setPassword(passwordEncoder.encode(input.getPassword()));
-
         return userRepository.save(user);
     }
 

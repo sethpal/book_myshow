@@ -10,9 +10,9 @@ import java.util.List;
 @Setter
 @Table(name = "CITY")
 public class City  extends BaseModel {
-
-
-    String name;
+    private String name;
+    private String state;
+    private String zipcode;
     @OneToMany
     List<Theatre> theatre;
 

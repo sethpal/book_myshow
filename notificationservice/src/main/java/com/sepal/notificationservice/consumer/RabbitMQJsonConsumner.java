@@ -23,6 +23,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -99,6 +101,10 @@ public class RabbitMQJsonConsumner {
             notification.setMessageDetails(notificationDto.getMessage());
             notification.setStatus((Status.DELIVERED));
             notification.setUser_id(notificationDto.getUserid());
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date = new Date();
+            notification.setCreated_on(formatter.format(date));
+
             notificationRepository.save(notification);
 
             notificationStatus = String.valueOf(Status.DELIVERED);

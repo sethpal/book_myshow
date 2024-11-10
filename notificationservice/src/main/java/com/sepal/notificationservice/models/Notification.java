@@ -18,4 +18,5 @@ public class Notification extends BaseModel{
     private String messageDetails;
     private Status status;
     private Long user_id;
+    private String created_on;
 }

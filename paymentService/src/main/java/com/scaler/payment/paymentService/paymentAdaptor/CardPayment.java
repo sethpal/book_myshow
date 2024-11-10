@@ -7,6 +7,7 @@ public interface CardPayment
     Long cardNumber= 0L;
     String expiryDate = null;
 
+    public boolean isBalanceAvailable();
 
     public String makePayment();
 }
